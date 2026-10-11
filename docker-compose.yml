@@ -1,0 +1,41 @@
+
+
+services:
+
+  # 1. MongoDB Service
+  mongodb:
+  # //image => the name of project
+    image: mongo:latest
+    container_name: mongodb_container
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  # 2. Redis Service
+  redis:
+    image: redis:alpine
+    container_name: redis_container
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # 3. RabbitMQ Service (with Management Plugin)
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_container
+    restart: always
+    ports:
+      - "5672:5672"   # AMQP protocol port
+      - "15672:15672" # Management Web UI port
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+# Persistent Volumes
+volumes:
+  mongo_data:
+  redis_data:
+  rabbitmq_data:
